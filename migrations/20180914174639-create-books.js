@@ -9,15 +9,19 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       id: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       title: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       author: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       genre: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       first_published: {
