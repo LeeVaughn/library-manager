@@ -1,14 +1,69 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Patrons = sequelize.define('Patrons', {
-    id: DataTypes.INTEGER,
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
-    address: DataTypes.STRING,
-    email: DataTypes.STRING,
-    library_id: DataTypes.STRING,
-    zip_code: DataTypes.INTEGER
-  }, {});
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    first_name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "First Name cannot be left blank"
+        }
+      }
+    },
+    last_name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Last Name cannot be left blank"
+        }
+      }
+    },
+    address: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Address cannot be left blank"
+        }
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: {
+          msg: "Please enter a valid email, i.e. name@email.com"
+        },
+        notEmpty: {
+          msg: "Email cannot be left blank"
+        }
+      }
+    },
+    library_id: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Library ID cannot be left blank"
+        }
+      }
+    },
+    zip_code: {
+      type: DataTypes.STRING,
+      validate: {
+        isInt: {
+          msg: "Zip Code should be a five digit number"
+        },
+        notEmpty: {
+          msg: "Zip Code cannot be left blank"
+        }
+      }
+    }
+  }, {
+    timestamps: false
+  });
   patrons.associate = function(models) {
     // associations can be defined here
   };
