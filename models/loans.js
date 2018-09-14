@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const loans = sequelize.define('loans', {
+  const Loans = sequelize.define('Loans', {
     id: DataTypes.INTEGER,
     book_id: DataTypes.INTEGER,
     patron_id: DataTypes.INTEGER,
@@ -11,5 +11,5 @@ module.exports = (sequelize, DataTypes) => {
   loans.associate = function(models) {
     // associations can be defined here
   };
-  return loans;
+  return Loans;
 };
