@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     timestamps: false
   });
-  loans.associate = function(models) {
+  Loans.associate = function(models) {
     // associations can be defined here
   };
   return Loans;
