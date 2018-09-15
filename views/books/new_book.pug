@@ -1,11 +1,8 @@
-extends layout
+extends ../layout
 
 block content
   h1 New Book
   form
-    h2.error Oooops!
-    ul.error
-      li Author is required
     p
       label(for='title') Title
       input#title(type='text')
@@ -20,4 +17,3 @@ block content
       input#first_published(type='text')
     p
       input(type='submit', value='Create New Book')
-
