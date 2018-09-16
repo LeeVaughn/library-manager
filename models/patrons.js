@@ -1,9 +1,7 @@
-'use strict';
+"use strict";
 module.exports = (sequelize, DataTypes) => {
-  const Patrons = sequelize.define('Patrons', {
+  var Patrons = sequelize.define("Patrons", {
     id: {
-      allowNull: false,
-      autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
     },
@@ -51,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     zip_code: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       validate: {
         isInt: {
           msg: "Zip Code should be a five digit number"

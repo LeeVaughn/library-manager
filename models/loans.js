@@ -1,18 +1,13 @@
-'use strict';
+"use strict";
 module.exports = (sequelize, DataTypes) => {
-  const Loans = sequelize.define('Loans', {
+  const Loans = sequelize.define("Loans", {
     id: {
-      allowNull: false,
-      autoIncrement: true,
       type: DataTypes.INTEGER,
       primaryKey: true
     },
     book_id: {
       type: DataTypes.INTEGER,
       validate: {
-        isInt: {
-          msg: "Book ID should be a number"
-        },
         notEmpty: {
           msg: "Book ID cannot be left blank"
         }
@@ -21,9 +16,6 @@ module.exports = (sequelize, DataTypes) => {
     patron_id: {
       type: DataTypes.INTEGER,
       validate: {
-        isInt: {
-          msg: "Patron ID should be a number"
-        },
         notEmpty: {
           msg: "Patron ID cannot be left blank"
         }
