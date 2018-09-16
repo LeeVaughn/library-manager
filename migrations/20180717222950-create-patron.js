@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      id: {
+        type: Sequelize.INT
+      },
       first_name: {
         type: Sequelize.STRING
       },
@@ -24,7 +27,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       zip_code: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INT
       },
       createdAt: {
         allowNull: false,
