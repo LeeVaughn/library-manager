@@ -39,7 +39,7 @@ router.post("/new_patron", function(req, res, next) {
   db.Patrons.create(req.body).then(function() {
       res.redirect("/all_patrons");
     })
-    .catch(function(e) {
+    .catch(function(err) {
       if (err.name === "SequelizeValidationError") {
         res.render("./patrons/new_patron", { patrons: db.Patrons.build(req.body), errors: err.errors })
       }
