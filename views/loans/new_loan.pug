@@ -5,7 +5,7 @@ block content
     h1 New Loan
     if errors
       each error in errors
-        p #{error.message}
+        p#error #{error.message}
     form(method="post" action="/new_loan")
       p
         label(for="book_id") Book

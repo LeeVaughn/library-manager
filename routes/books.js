@@ -5,7 +5,7 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
 // get new book
-router.get("/new_book", function(req, res) {
+router.get("/new_book", function(req, res, next) {
   res.render("./books/new_book", { books: db.Books.build() });
 });
 
@@ -17,7 +17,7 @@ router.get("/all_books", function(req, res, next) {
 });
 
 // get overdue books
-router.get("/overdue_books", function(req, res) {
+router.get("/overdue_books", function(req, res, next) {
   db.Loans.findAll({
     where: {
       returned_on: null,
@@ -34,7 +34,7 @@ router.get("/overdue_books", function(req, res) {
 });
 
 // get checkout books
-router.get("/checked_books", function(req, res) {
+router.get("/checked_books", function(req, res, next) {
   db.Loans.findAll({
     where: {
       returned_on: null
@@ -48,7 +48,7 @@ router.get("/checked_books", function(req, res) {
 });
 
 // get book info
-router.get("/books/:id", function(req, res) {
+router.get("/books/:id", function(req, res, next) {
   db.Books.findAll({
     where: {
       id: req.params.id
@@ -59,7 +59,7 @@ router.get("/books/:id", function(req, res) {
         model: db.Patrons
       }
     }
-  }).then(bookDetail => {
+  }).then(function(bookDetail) {
     let bookInfo = bookDetail[0];
     let loanInfo = bookInfo.Loans;
     res.render("./books/book_detail", { bookInfo, loanInfo })
@@ -68,12 +68,12 @@ router.get("/books/:id", function(req, res) {
 
 // post new book
 router.post("/new_book", function(req, res, next) {
-  db.Books.create(req.body).then(function(book) {
+  db.Books.create(req.body).then(function() {
       res.redirect("/all_books");
     })
-    .catch(function(e) {
-      if (e.name === "SequelizeValidationError") {
-        res.render("./books/new_book", { books: db.Books.build(), errors: e.errors })
+    .catch(function(err) {
+      if (err.name === "SequelizeValidationError") {
+        res.render("./books/new_book", { books: db.Books.build(req.body), errors: err.errors })
       }
     });
 });
@@ -86,11 +86,11 @@ router.post("/books/:id", function(req, res, next) {
       }
     }).then(function(book) {
       return book[0].update(req.body)
-    }).then(function(book) {
+    }).then(function() {
       res.redirect("/all_books");
     })
-    .catch(function(e) {
-      if (e.name === "SequelizeValidationError") {
+    .catch(function(err) {
+      if (err.name === "SequelizeValidationError") {
         db.Books.findAll({
           where: {
             id: req.params.id
@@ -104,7 +104,7 @@ router.post("/books/:id", function(req, res, next) {
         }).then(bookDetail => {
           let bookInfo = bookDetail[0];
           let loanInfo = bookInfo.Loans;
-          res.render("./books/book_detail", { bookInfo, loanInfo, errors: e.errors })
+          res.render("./books/book_detail", { bookInfo, loanInfo, errors: err.errors })
         });
       }
     });

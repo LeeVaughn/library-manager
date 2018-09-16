@@ -4,7 +4,7 @@ block content
     h1 New Book
     if errors
       each error in errors
-        p #{error.message}
+        p#error #{error.message}
     form(method="post" action="/new_book")
       p
         label(for="title") Title

@@ -7,8 +7,8 @@ const Op = Sequelize.Op;
 
 // get new loan
 router.get("/new_loan", function(req, res, next) {
-  db.Books.findAll().then(books => {
-    db.Patrons.findAll().then(patrons => {
+  db.Books.findAll().then(function(books) {
+    db.Patrons.findAll().then(function(patrons) {
       res.render("./loans/new_loan", {
         books,
         patrons,
@@ -74,7 +74,7 @@ router.get("/checked_loans", function(req, res, next) {
 });
 
 // get return loan form
-router.get("/return/:id", function(req, res) {
+router.get("/return/:id", function(req, res, next) {
   db.Loans.findAll({
     where: {
       id: req.params.id
@@ -86,7 +86,7 @@ router.get("/return/:id", function(req, res) {
         model: db.Patrons
       }
     ],
-  }).then(loan => {
+  }).then(function(loan) {
     let firstLoan = loan[0];
     res.render("./books/return_book", { loan: firstLoan, returned_on: moment().format("YYYY-MM-DD") });
   });
@@ -94,19 +94,19 @@ router.get("/return/:id", function(req, res) {
 
 // post new loan
 router.post("/new_loan", function(req, res, next) {
-  db.Loans.create(req.body).then(function(book) {
+  db.Loans.create(req.body).then(function() {
       res.redirect("/all_loans");
     })
-    .catch(function(e) {
-      if (e.name === "SequelizeValidationError") {
-        db.Books.findAll().then(books => {
-          db.Patrons.findAll().then(patrons => {
+    .catch(function(err) {
+      if (err.name === "SequelizeValidationError") {
+        db.Books.findAll().then(function(books) {
+          db.Patrons.findAll().then(function(patrons) {
             res.render("./loans/new_loan", {
               books,
               patrons,
               loaned_on: moment().format("YYYY-MM-DD"),
               return_by: moment().add(7, "days").format("YYYY-MM-DD"),
-              errors: e.errors
+              errors: err.errors
             });
           })
         })
@@ -126,8 +126,8 @@ router.post("/return/:id", function(req, res, next) {
     }).then(function() {
       res.redirect("/all_loans");
     })
-    .catch(function(e) {
-      if (e.name === "SequelizeValidationError") {
+    .catch(function(err) {
+      if (err.name === "SequelizeValidationError") {
         db.Loans.findAll({
           where: {
             id: req.params.id
@@ -139,12 +139,12 @@ router.post("/return/:id", function(req, res, next) {
               model: db.Patrons
             }
           ],
-        }).then(loan => {
+        }).then(function(loan) {
           let firstLoan = loan[0];
           res.render("./books/return_book", {
             loan: firstLoan,
             returned_on: moment().format("YYYY-MM-DD"),
-            errors: e.errors
+            errors: err.errors
           });
         });
       }

@@ -5,7 +5,7 @@ block content
     h1 New Patron
     if errors
       each error in errors
-        p #{error.message}
+        p#error #{error.message}
     form(method="post" action="/new_patron")
       p
         label(for="first_name") First Name

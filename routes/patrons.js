@@ -27,23 +27,21 @@ router.get("/patrons/:id", function(req, res, next) {
         model: db.Books
       }
     }
-  }).then(patronDetail => {
+  }).then(function(patronDetail) {
     let patronInfo = patronDetail[0];
     let loanInfo = patronInfo.Loans;
-    res.render("./patrons/patron_detail", { patronInfo, loanInfo
-    });
+    res.render("./patrons/patron_detail", { patronInfo, loanInfo });
   })
 });
 
 // post new patron
 router.post("/new_patron", function(req, res, next) {
-  db.Patrons.create(req.body).then(function(patron) {
+  db.Patrons.create(req.body).then(function() {
       res.redirect("/all_patrons");
     })
     .catch(function(e) {
-      console.log(e);
-      if (e.name === "SequelizeValidationError") {
-        res.render("./patrons/new_patron", { patrons: db.Patrons.build(), errors: e.errors })
+      if (err.name === "SequelizeValidationError") {
+        res.render("./patrons/new_patron", { patrons: db.Patrons.build(req.body), errors: err.errors })
       }
     });
 });
@@ -56,11 +54,11 @@ router.post("/patrons/:id", function(req, res, next) {
       }
     }).then(function(patron) {
       return patron[0].update(req.body)
-    }).then(function(patron) {
+    }).then(function() {
       res.redirect("/all_patrons");
     })
-    .catch(function(e) {
-      if (e.name === "SequelizeValidationError") {
+    .catch(function(err) {
+      if (err.name === "SequelizeValidationError") {
         db.Patrons.findAll({
           where: {
             id: req.params.id
@@ -71,10 +69,10 @@ router.post("/patrons/:id", function(req, res, next) {
               model: db.Books
             }
           }
-        }).then(patronDetail => {
+        }).then(function(patronDetail) {
           let patronInfo = patronDetail[0];
           let loanInfo = patronInfo.Loans;
-          res.render("./patrons/patron_detail", { patronInfo, loanInfo, errors: e.errors });
+          res.render("./patrons/patron_detail", { patronInfo, loanInfo, errors: err.errors });
         })
       }
     });
