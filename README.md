@@ -25,6 +25,11 @@ This project was created as a part of the Treehouse Full Stack JavaScript Techde
 
 ## To Run
 
+* Download project files by running ```git clone https://github.com/LeeVaughn/library-manager```
+* Navigate to the project folder
+* Install dependencies with ```npm install```
+* Start application by running ```npm start``` (application runs on localhost:3000)
+
 * Coming soon
 
 ## Built With
