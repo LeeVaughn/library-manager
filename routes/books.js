@@ -6,17 +6,13 @@ const Op = Sequelize.Op;
 
 // get new book
 router.get("/new_book", function(req, res) {
-  res.render("./books/new_book", {
-    books: db.Books.build()
-  });
+  res.render("./books/new_book", { books: db.Books.build() });
 });
 
 // get all books
 router.get("/all_books", function(req, res, next) {
   db.Books.findAll().then(function(books) {
-    res.render("./books/all_books", {
-      books
-    });
+    res.render("./books/all_books", { books });
   });
 });
 
@@ -33,9 +29,7 @@ router.get("/overdue_books", function(req, res) {
       model: db.Books
     }],
   }).then(function(overdueBooks) {
-    res.render("./books/overdue_books", {
-      overdueBooks
-    });
+    res.render("./books/overdue_books", { overdueBooks });
   });
 });
 
@@ -49,9 +43,7 @@ router.get("/checked_books", function(req, res) {
       model: db.Books
     }, ],
   }).then(function(checkedBooks) {
-    res.render("./books/checked_books", {
-      checkedBooks
-    });
+    res.render("./books/checked_books", { checkedBooks });
   });
 });
 
@@ -70,10 +62,7 @@ router.get("/books/:id", function(req, res) {
   }).then(bookDetail => {
     let bookInfo = bookDetail[0];
     let loanInfo = bookInfo.Loans;
-    res.render("./books/book_detail", {
-      bookInfo,
-      loanInfo
-    })
+    res.render("./books/book_detail", { bookInfo, loanInfo })
   });
 });
 
@@ -84,10 +73,7 @@ router.post("/new_book", function(req, res, next) {
     })
     .catch(function(e) {
       if (e.name === "SequelizeValidationError") {
-        res.render("./books/new_book", {
-          books: db.Books.build(),
-          errors: e.errors
-        })
+        res.render("./books/new_book", { books: db.Books.build(), errors: e.errors })
       }
     });
 });
@@ -118,11 +104,7 @@ router.post("/books/:id", function(req, res, next) {
         }).then(bookDetail => {
           let bookInfo = bookDetail[0];
           let loanInfo = bookInfo.Loans;
-          res.render("./books/book_detail", {
-            bookInfo,
-            loanInfo,
-            errors: e.errors
-          })
+          res.render("./books/book_detail", { bookInfo, loanInfo, errors: e.errors })
         });
       }
     });
