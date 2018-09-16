@@ -10,9 +10,28 @@ router.get("/new_patron", function(req, res, next) {
 
 // get all patrons
 router.get("/all_patrons", function(req, res, next) {
-  db.Patrons.findAll().then(function(patrons) {
-    res.render("./patrons/all_patrons", { patrons });
-  });
+  res.redirect("./all_patrons/page/1")
+});
+
+// get pagination
+router.get('/all_patrons/page/:page', function(req, res, next) {
+  const limit = 10;
+  let offset = 0;
+  db.Patrons.findAndCountAll()
+    .then(function(data) {
+      const page = req.params.page;
+      const pages = Math.ceil(data.count / limit);
+      offset = limit * (page - 1);
+      db.Patrons.findAll({ limit: limit, offset: offset, sort: { id: 1 } })
+      .then(function(patrons) {
+        res.render("./patrons/all_patrons", {
+          patrons: patrons,
+          pagination: Array.apply(null, { length: pages }).map(Function.call, Number)
+        });
+      }).catch(function(err) {
+        res.send(500, err);
+      });
+    });
 });
 
 // get individual patron

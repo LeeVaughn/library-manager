@@ -9,11 +9,30 @@ router.get("/new_book", function(req, res, next) {
   res.render("./books/new_book", { books: db.Books.build() });
 });
 
-// get all books
+// get all books, redirects to first page of pagination
 router.get("/all_books", function(req, res, next) {
-  db.Books.findAll().then(function(books) {
-    res.render("./books/all_books", { books });
-  });
+  res.redirect("./all_books/page/1")
+});
+
+// get pagination
+router.get('/all_books/page/:page', function(req, res, next) {
+  const limit = 10;
+  let offset = 0;
+  db.Books.findAndCountAll()
+    .then(function(data) {
+      const page = req.params.page;
+      const pages = Math.ceil(data.count / limit);
+      offset = limit * (page - 1);
+      db.Books.findAll({ limit: limit, offset: offset, sort: { id: 1 } })
+      .then(function(books) {
+        res.render("./books/all_books", {
+          books: books,
+          pagination: Array.apply(null, { length: pages }).map(Function.call, Number)
+        });
+      }).catch(function(err) {
+        res.send(500, err);
+      });
+    });
 });
 
 // get overdue books
