@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+  body
+    h1 Patron: Return Book 
+    if errors
+      each error in errors
+        p #{error.message}
+    p
+      strong Book Title: 
+      | #{loan.Book.title}
+    p
+      strong Loaned By: 
+      | #{loan.Patron.first_name} #{loan.Patron.last_name}
+    p
+      strong Loaned On: 
+      | #{loan.loaned_on}
+    p
+      strong Return By: 
+      | #{loan.return_by}
+    form(method="post" action=`/return/${loan.id}`)
+      p
+        label(for="returned_on") Returned on:
+        input#returned_on(type="text" value=returned_on, name="returned_on")
+      p
+        input(type="submit" value="Return Book")
