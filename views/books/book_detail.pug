@@ -1,40 +1,45 @@
 extends ../layout
 
 block content
-  h1 Book: A Brief History of Time
-  form
-    p
-      label(for='title') Title
-      input#title(type='text', value='A Brief History of Time')
-    p
-      label(for='author') Author
-      input#author(type='text', value='Stephen Hawking')
-    p
-      label(for='genre') Genre
-      input#genre(type='text', value='Non Fiction')
-    p
-      label(for='first_published') First Published
-      input#first_published(type='text', value='1988')
-    p
-      input(type='submit', value='Update')
-  h2 Loan History
-  table
-    thead
-      tr
-        th Book
-        th Patron 
-        th Loaned on
-        th Return by 
-        th Returned on
-        th Action
-    tbody
-      tr
-        td
-          a(href='book_detail.html') A Brief History of Time
-        td
-          a(href='patron_detail.html') Andrew Chalkley
-        td 2015-12-12
-        td 2015-12-19
-        td
-        td
-          a.button(href='return_book.html') Return Book
+    h1 #{bookInfo.title}
+    if errors
+      each error in errors
+        p #{error.message}
+    form(method="post", action="/books/" + bookInfo.id)
+      p
+        label(for="title") Title
+        input#title(type="text" value=bookInfo.title name="title" )
+      p
+        label(for="author") Author
+        input#author(type="text" value=bookInfo.author name="author" )
+      p
+        label(for="genre") Genre
+        input#genre(type="text" value=bookInfo.genre name="genre" )
+      p
+        label(for="first_published") First Published
+        input#first_published(type="text" value=bookInfo.first_published name="first_published")
+      p
+        input(type="submit" value="Update")
+    h2 Loan History
+    table
+      thead
+        tr
+          th Book
+          th Patron 
+          th Loaned on
+          th Return by 
+          th Returned on
+          th Action
+      tbody
+        each loan in loanInfo
+          tr
+            td
+              a(href=`/books/${bookInfo.id}`) #{bookInfo.title}
+            td
+              a(href=`/patrons/${loan.Patron.id}`) #{loan.Patron.first_name} #{loan.Patron.last_name}
+            td #{loan.loaned_on}
+            td #{loan.return_by}
+            td #{loan.returned_on}
+            td
+              if (loan.returned_on === null)
+                a.button(href=`/return/${loan.id}`) Return Book

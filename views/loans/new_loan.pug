@@ -1,38 +1,27 @@
 extends ../layout
 
 block content
-  h1 New Loan
-  form
-    p
-      label(for='book_id') Book
-      select#book_id
-        option(value='1') Harry Potter and the Philosopher's Stone
-        option(value='2') Harry Potter and the Chamber of Secrets
-        option(value='3') Harry Potter and the Prisoner of Azkaban
-        option(value='4') Harry Potter and the Goblet of Fire
-        option(value='5') Harry Potter and the Order of the Phoenix
-        option(value='6') Harry Potter and the Half-Blood Prince
-        option(value='7') Harry Potter and the Deathly Hallows
-        option(value='8') A Brief History of Time
-        option(value='9') The Universe in a Nutshell
-        option(value='10') Frankenstein
-        option(value='11') The Martian
-        option(value='12') Ready Player One
-        option(value='13') Armada
-        option(value='14') Pride and Prejudice
-        option(value='15') Emma
-    p
-      label(for='patron_id') Patron
-      select#patron_id
-        option(value='1') Andrew Chalkley
-        option(value='2') Dave McFarland
-        option(value='3') Alena Holligan
-        option(value='4') Michael Poley
-    p
-      label(for='loaned_on') Loaned on:
-      input#loaned_on(type='text', value='Sun May 22 2016 17:00:00 GMT-0700 (PDT)')
-    p
-      label(for='return_by') Return by:
-      input#return_by(type='text', value='Sun May 29 2016 17:00:00 GMT-0700 (PDT)')
-    p
-      input(type='submit', value='Create New Loan')
+  body
+    h1 New Loan
+    if errors
+      each error in errors
+        p #{error.message}
+    form(method="post" action="/new_loan")
+      p
+        label(for="book_id") Book
+        select#book_id(name="book_id")
+          each book in books
+            option(value=book.id, name="title") #{book.title}
+      p
+        label(for="patron_id") Patron
+        select#patron_id(name="patron_id")
+          each patron in patrons
+            option(value=patron.id) #{patron.first_name} #{patron.last_name}
+      p
+        label(for="loaned_on") Loaned on:
+        input#loaned_on(type="text" value=loaned_on name="loaned_on")
+      p
+        label(for="return_by") Return by:
+        input#return_by(type="text" value=return_by name="return_by")
+      p
+        input(type="submit" value="Create New Loan")

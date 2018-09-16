@@ -1,45 +1,29 @@
 extends ../layout
 
 block content
-  h1 Checked Out Books
-  p
-    a.button(href='new_book.html') Create New Book
-  p
-    | Filters 
-    a(href='all_books.html') All
-    |  
-    a(href='overdue_books.html') Overdue
-    |  
-    a(href='checked_books.html') Checked Out
-  table
-    thead
-      tr
-        th Title
-        th Author
-        th Genre
-        th Year Released
-    tbody
-      tr
-        td
-          a(href='book_detail.html') Emma
-        td Jane Austen
-        td Classic
-        td 1815
-      tr
-        td
-          a(href='book_detail.html') Harry Potter and the Goblet of Fire
-        td J.K. Rowling
-        td Fantasy
-        td 2000
-      tr
-        td
-          a(href='book_detail.html') A Brief History of Time
-        td Stephen Hawking
-        td Non Fiction
-        td 1988
-      tr
-        td
-          a(href='book_detail.html') The Universe in a Nutshell
-        td Stephen Hawking
-        td Non Fiction
-        td 2001
+    h1 Checked Out Books
+    p
+      a.button(href="/new_book") Create New Book
+    p
+      | Filters 
+      a(href="/all_books") All
+      |  | 
+      a(href="/overdue_books") Overdue
+      |  | 
+      a(href="/checked_books") Checked Out
+      
+    table
+      thead
+        tr
+          th Title
+          th Author
+          th Genre
+          th Year Released
+      tbody
+        each checkedBook in checkedBooks
+          tr
+            td
+              a(href=`/books/${checkedBook.Book.id}`) #{checkedBook.Book.title}
+            td #{checkedBook.Book.author}
+            td #{checkedBook.Book.genre}
+            td #{checkedBook.Book.first_published}

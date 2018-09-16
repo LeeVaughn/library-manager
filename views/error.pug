@@ -1,23 +1,6 @@
-extends layout
-
-block content
-  h1 New Book
-  form
-    h2.error Oooops!
-    ul.error
-      li Author is required
-    p
-      label(for='title') Title
-      input#title(type='text')
-    p
-      label(for='author') Author
-      input#author(type='text')
-    p
-      label(for='genre') Genre
-      input#genre(type='text')
-    p
-      label(for='first_published') First Published
-      input#first_published(type='text')
-    p
-      input(type='submit', value='Create New Book')
-
+if(errors)
+  h2.errors Ooops an error occured!
+  ul.errors
+    each error in errors
+      li
+        =error.message
