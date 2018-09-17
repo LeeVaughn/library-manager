@@ -14,27 +14,6 @@ router.get("/all_books", function(req, res, next) {
   res.redirect("./all_books/page/1")
 });
 
-// get pagination
-router.get("/all_books/page/:page", function(req, res, next) {
-  const limit = 10;
-  let offset = 0;
-  db.Books.findAndCountAll()
-    .then(function(data) {
-      const page = req.params.page;
-      const pages = Math.ceil(data.count / limit);
-      offset = limit * (page - 1);
-      db.Books.findAll({ limit: limit, offset: offset, sort: { id: 1 } })
-      .then(function(books) {
-        res.render("./books/all_books", {
-          books: books,
-          pagination: Array.apply(null, { length: pages }).map(Function.call, Number)
-        });
-      }).catch(function(err) {
-        res.send(500, err);
-      });
-    });
-});
-
 // get overdue books
 router.get("/overdue_books", function(req, res, next) {
   db.Loans.findAll({
@@ -83,6 +62,27 @@ router.get("/books/:id", function(req, res, next) {
     const loanInfo = bookInfo.Loans;
     res.render("./books/book_detail", { bookInfo, loanInfo });
   });
+});
+
+// get pagination
+router.get("/all_books/page/:page", function(req, res, next) {
+  const limit = 10;
+  let offset = 0;
+  db.Books.findAndCountAll()
+    .then(function(data) {
+      const page = req.params.page;
+      const pages = Math.ceil(data.count / limit);
+      offset = limit * (page - 1);
+      db.Books.findAll({ limit: limit, offset: offset, sort: { id: 1 } })
+      .then(function(books) {
+        res.render("./books/all_books", {
+          books: books,
+          pagination: Array.apply(null, { length: pages }).map(Function.call, Number)
+        });
+      }).catch(function(err) {
+        res.send(500, err);
+      });
+    });
 });
 
 // search function
