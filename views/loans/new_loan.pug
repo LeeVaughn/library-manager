@@ -6,7 +6,7 @@ block content
     if errors
       each error in errors
         p#error #{error.message}
-    form(method="post" action="/new_loan")
+    form(action="/new_loan", method="post")
       p
         label(for="book_id") Book
         select#book_id(name="book_id")

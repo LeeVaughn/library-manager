@@ -6,27 +6,27 @@ block content
     if errors
       each error in errors
         p #{error.message}
-    form(method="post", action=`/patrons/${patronInfo.id}`)
+    form(action=`/patrons/${patronInfo.id}`, method="post")
       p
         label(for="first_name") First Name
-        input#first_name(type="text" value=patronInfo.first_name name="first_name" required)
+        input#first_name(type="text", value=patronInfo.first_name, name="first_name" required)
       p
         label(for="last_name") Last Name
-        input#last_name(type="text" value=patronInfo.last_name name="last_name" required)
+        input#last_name(type="text", value=patronInfo.last_name, name="last_name" required)
       p
         label(for="address")  Address
-        input#address(type="text" value=patronInfo.address name="address" required)
+        input#address(type="text", value=patronInfo.address, name="address" required)
       p
         label(for="email") Email
-        input#email(type="text" value=patronInfo.email name="email" required)
+        input#email(type="text", value=patronInfo.email, name="email" required)
       p
         label(for="library_id") Library ID
-        input#library_id(type="text" value=patronInfo.library_id name="library_id" required)
+        input#library_id(type="text", value=patronInfo.library_id, name="library_id" required)
       p
         label(for="zip_code") Zip Code
-        input#zip_code(type="text" value=patronInfo.zip_code name="zip_code" required)
+        input#zip_code(type="text", value=patronInfo.zip_code, name="zip_code" required)
       p
-        input(type="submit" value="Update")
+        input(type="submit", value="Update")
     h2 Loan History
     table
       thead

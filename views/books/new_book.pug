@@ -5,18 +5,18 @@ block content
     if errors
       each error in errors
         p#error #{error.message}
-    form(method="post" action="/new_book")
+    form(action="/new_book", method="post")
       p
         label(for="title") Title
-        input#title(type="text" name="title" )
+        input#title(type="text", name="title" )
       p
         label(for="author") Author
-        input#author(type="text" name="author" )
+        input#author(type="text", name="author" )
       p
         label(for="genre") Genre
-        input#genre(type="text" name="genre" )
+        input#genre(type="text", name="genre" )
       p
         label(for="first_published") First Published
-        input#first_published(type="text" name="first_published" placeholder="Optional")
+        input#first_published(type="text", name="first_published", placeholder="Optional")
       p
-        input(type="submit" value="Create New Book")
+        input(type="submit", value="Create New Book")

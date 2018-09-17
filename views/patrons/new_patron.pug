@@ -6,19 +6,19 @@ block content
     if errors
       each error in errors
         p#error #{error.message}
-    form(method="post" action="/new_patron")
+    form(action="/new_patron", method="post")
       p
         label(for="first_name") First Name
-        input#first_name(type="text" name="first_name")
+        input#first_name(type="text", name="first_name")
       p
         label(for="last_name") Last Name
-        input#last_name(type="text" name="last_name")
+        input#last_name(type="text", name="last_name")
       p
         label(for="address")  Address
-        input#address(type="text" name="address")
+        input#address(type="text", name="address")
       p
         label(for="email") Email
-        input#email(type="text" name="email")
+        input#email(type="text", name="email")
       p
         label(for="library_id") Library ID
         select#library_id(name="library_id")

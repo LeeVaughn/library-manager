@@ -5,21 +5,21 @@ block content
     if errors
       each error in errors
         p #{error.message}
-    form(method="post", action="/books/" + bookInfo.id)
+    form(action="/books/" + bookInfo.id, method="post")
       p
         label(for="title") Title
-        input#title(type="text" value=bookInfo.title name="title" )
+        input#title(type="text", value=bookInfo.title, name="title")
       p
         label(for="author") Author
-        input#author(type="text" value=bookInfo.author name="author" )
+        input#author(type="text", value=bookInfo.author, name="author")
       p
         label(for="genre") Genre
-        input#genre(type="text" value=bookInfo.genre name="genre" )
+        input#genre(type="text", value=bookInfo.genre, name="genre")
       p
         label(for="first_published") First Published
-        input#first_published(type="text" value=bookInfo.first_published name="first_published")
+        input#first_published(type="text", value=bookInfo.first_published, name="first_published")
       p
-        input(type="submit" value="Update")
+        input(type="submit", value="Update")
     h2 Loan History
     table
       thead
