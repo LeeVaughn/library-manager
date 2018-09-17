@@ -31,5 +31,5 @@ block content
       a(href=`/all_books/page/${index + 1}`) #{index + 1} 
   form(action="/search_books", method="get")
     p
-      input.searchField(type="search", name="query", placeholder="Search All Books")
-      input.searchButton(type="submit", value="Search")
+      input(type="search", name="query", placeholder="Search All Books")
+      input.searchButton(type="submit", class="searchButton", value="Search")
