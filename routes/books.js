@@ -15,7 +15,7 @@ router.get("/all_books", function(req, res, next) {
 });
 
 // get pagination
-router.get('/all_books/page/:page', function(req, res, next) {
+router.get("/all_books/page/:page", function(req, res, next) {
   const limit = 10;
   let offset = 0;
   db.Books.findAndCountAll()
@@ -85,6 +85,35 @@ router.get("/books/:id", function(req, res, next) {
   });
 });
 
+// search function
+router.get("/search_books", function(req, res, next) {
+  const query = (req.query.query);
+  db.Books.findAll({
+    where: {
+      [Op.or]: {
+        title: {
+          [Op.like]: `%${query}%`
+        },
+        author: {
+          [Op.like]: `%${query}%`
+        },
+        genre: {
+          [Op.like]: `%${query}%`
+        },
+        first_published: {
+          [Op.like]: `%${query}%`
+        }
+      }
+    }
+  }).then(function(books) {
+    res.render("./books/book_results", {
+      books: books
+    });
+  }).catch(function(err) {
+    res.send(500, err);
+  });
+});
+
 // post new book
 router.post("/new_book", function(req, res, next) {
   db.Books.create(req.body).then(function() {
@@ -120,9 +149,9 @@ router.post("/books/:id", function(req, res, next) {
               model: db.Patrons
             }
           }
-        }).then(bookDetail => {
-          let bookInfo = bookDetail[0];
-          let loanInfo = bookInfo.Loans;
+        }).then(function(bookDetail) {
+          const bookInfo = bookDetail[0];
+          const loanInfo = bookInfo.Loans;
           res.render("./books/book_detail", { bookInfo, loanInfo, errors: err.errors })
         });
       }
