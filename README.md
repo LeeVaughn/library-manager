@@ -30,8 +30,6 @@ This project was created as a part of the Treehouse Full Stack JavaScript Techde
 * Install dependencies with ```npm install```
 * Start application by running ```npm start``` (application runs on localhost:3000)
 
-* Coming soon
-
 ## Built With
 
 * [Node.js](https://nodejs.org/en/)
