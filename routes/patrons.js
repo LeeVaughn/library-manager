@@ -1,15 +1,36 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 // get new patron
 router.get("/new_patron", function(req, res, next) {
   res.render("./patrons/new_patron", { patrons: db.Patrons.build() });
 });
 
-// get all patrons
+// get all patrons, redirects to first page of pagination
 router.get("/all_patrons", function(req, res, next) {
   res.redirect("./all_patrons/page/1")
+});
+
+// get individual patron
+router.get("/patrons/:id", function(req, res, next) {
+  db.Patrons.findAll({
+    where: {
+      id: req.params.id
+    },
+    include: {
+      model: db.Loans,
+      include: {
+        model: db.Books
+      }
+    }
+  }).then(function(patronDetail) {
+    const patronInfo = patronDetail[0];
+    const loanInfo = patronInfo.Loans;
+    res.render("./patrons/patron_detail", { patronInfo, loanInfo });
+  })
 });
 
 // get pagination
@@ -31,25 +52,6 @@ router.get("/all_patrons/page/:page", function(req, res, next) {
         res.send(500, err);
       });
     });
-});
-
-// get individual patron
-router.get("/patrons/:id", function(req, res, next) {
-  db.Patrons.findAll({
-    where: {
-      id: req.params.id
-    },
-    include: {
-      model: db.Loans,
-      include: {
-        model: db.Books
-      }
-    }
-  }).then(function(patronDetail) {
-    const patronInfo = patronDetail[0];
-    const loanInfo = patronInfo.Loans;
-    res.render("./patrons/patron_detail", { patronInfo, loanInfo });
-  })
 });
 
 // search function
