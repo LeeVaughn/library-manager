@@ -13,7 +13,7 @@ router.get("/all_patrons", function(req, res, next) {
 });
 
 // get pagination
-router.get('/all_patrons/page/:page', function(req, res, next) {
+router.get("/all_patrons/page/:page", function(req, res, next) {
   const limit = 10;
   let offset = 0;
   db.Patrons.findAndCountAll()
@@ -50,6 +50,43 @@ router.get("/patrons/:id", function(req, res, next) {
     const loanInfo = patronInfo.Loans;
     res.render("./patrons/patron_detail", { patronInfo, loanInfo });
   })
+});
+
+// search function
+router.get("/search_patrons", function(req, res, next) {
+  const query = (req.query.query);
+  db.Patrons.findAll({
+    where: {
+      [Op.or]: {
+        first_name: {
+          [Op.like]: `%${query}%`
+        },
+        last_name: {
+          [Op.like]: `%${query}%`
+        },
+        address: {
+          [Op.like]: `%${query}%`
+        },
+        email: {
+          [Op.like]: `%${query}%`
+        },
+        library_id: {
+          [Op.like]: `%${query}%`
+        },
+        zip_code: {
+          [Op.like]: `%${query}%`
+        }
+      }
+    }
+  }).then(function(patrons) {
+    console.log("test");
+    console.log(patrons);
+    res.render("./patrons/patron_results", {
+      patrons: patrons
+    });
+  }).catch(function(err) {
+    res.send(500, err);
+  });
 });
 
 // post new patron

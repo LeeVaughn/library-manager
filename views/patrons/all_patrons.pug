@@ -1,26 +1,30 @@
 extends ../layout
 
 block content
-    h1 Patrons
-    p
-      a.button(href="/new_patron") Create New Patron
-    table
-      thead
+  h1 Patrons
+  p
+    a.button(href="/new_patron") Create New Patron
+  table
+    thead
+      tr
+        th Name 
+        th Address
+        th Email
+        th Library ID
+        th Zip
+    tbody
+      each patron in patrons
         tr
-          th Name 
-          th Address
-          th Email
-          th Library ID
-          th Zip
-      tbody
-        each patron in patrons
-          tr
-            td
-              a(href=`/patrons/${patron.id}`) #{patron.first_name + " " + patron.last_name}
-            td #{patron.address}
-            td #{patron.email}
-            td #{patron.library_id}
-            td #{patron.zip_code}
-    p Page 
-      each page, index in pagination
-        a(href=`/all_patrons/page/${index + 1}`) #{index + 1} 
+          td
+            a(href=`/patrons/${patron.id}`) #{patron.first_name + " " + patron.last_name}
+          td #{patron.address}
+          td #{patron.email}
+          td #{patron.library_id}
+          td #{patron.zip_code}
+  p Go to page: 
+    each page, index in pagination
+      a(href=`/all_patrons/page/${index + 1}`) #{index + 1} 
+  form(action="/search_patrons", method="get")
+    p
+      input(type="search", name="query", placeholder="Search All Patrons")
+      input(type="submit", value="Search")
