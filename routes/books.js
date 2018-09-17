@@ -79,9 +79,9 @@ router.get("/books/:id", function(req, res, next) {
       }
     }
   }).then(function(bookDetail) {
-    let bookInfo = bookDetail[0];
-    let loanInfo = bookInfo.Loans;
-    res.render("./books/book_detail", { bookInfo, loanInfo })
+    const bookInfo = bookDetail[0];
+    const loanInfo = bookInfo.Loans;
+    res.render("./books/book_detail", { bookInfo, loanInfo });
   });
 });
 

@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
-const Sequelize = require("sequelize");
 
 // get new patron
 router.get("/new_patron", function(req, res, next) {
@@ -47,8 +46,8 @@ router.get("/patrons/:id", function(req, res, next) {
       }
     }
   }).then(function(patronDetail) {
-    let patronInfo = patronDetail[0];
-    let loanInfo = patronInfo.Loans;
+    const patronInfo = patronDetail[0];
+    const loanInfo = patronInfo.Loans;
     res.render("./patrons/patron_detail", { patronInfo, loanInfo });
   })
 });
@@ -56,7 +55,7 @@ router.get("/patrons/:id", function(req, res, next) {
 // post new patron
 router.post("/new_patron", function(req, res, next) {
   db.Patrons.create(req.body).then(function() {
-      res.redirect("/all_patrons");
+      res.redirect("./all_patrons");
     })
     .catch(function(err) {
       if (err.name === "SequelizeValidationError") {
@@ -89,8 +88,8 @@ router.post("/patrons/:id", function(req, res, next) {
             }
           }
         }).then(function(patronDetail) {
-          let patronInfo = patronDetail[0];
-          let loanInfo = patronInfo.Loans;
+          const patronInfo = patronDetail[0];
+          const loanInfo = patronInfo.Loans;
           res.render("./patrons/patron_detail", { patronInfo, loanInfo, errors: err.errors });
         })
       }
