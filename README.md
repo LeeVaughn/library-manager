@@ -1,4 +1,4 @@
-# Library Management System (work in progress)
+# Library Management System
 
 A dynamic library management website built with Node.js, Express, Pug, Sequelize, and SQLite.
 
