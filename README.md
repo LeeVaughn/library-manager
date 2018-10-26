@@ -40,7 +40,7 @@ This project was created as a part of the Treehouse Full Stack JavaScript Techde
 
 ## Dependencies
 
-* [cookie-parser](https://www.npmjs.com/package/cookie-parser)
+* [cookie-parser](https://www.npmjs.com/package/cookie-parser) Parse Cookie header and populate req.cookies with an object keyed by the cookie names
 * [debug](https://www.npmjs.com/package/debug) A tiny JavaScript debugging utility modeled after Node.js core's debugging technique
 * [http-errors](https://www.npmjs.com/package/http-errors) Create HTTP errors for Express, Koa, Connect, etc. with ease
 * [moment](https://www.npmjs.com/package/moment) A lightweight JavaScript date library for parsing, validating, manipulating, and formatting dates
