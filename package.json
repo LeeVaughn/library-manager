@@ -13,7 +13,7 @@
     "moment": "^2.22.2",
     "morgan": "~1.9.0",
     "pug": "^2.0.3",
-    "sequelize": "^4.38.1",
+    "sequelize": "^5.15.1",
     "sequelize-cli": "^4.1.1",
     "sqlite3": "^4.0.2"
   }
